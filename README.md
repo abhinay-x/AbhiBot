@@ -1,26 +1,62 @@
-# AI-Powered Chatbot Platform
+# AbhiBot – AI Chat Platform
 
-A comprehensive AI-powered chatbot platform built with React frontend and Node.js backend, featuring multiple AI models, real-time chat, specialized chatbots, and advanced features.
+AbhiBot is a full‑stack, real‑time AI chat platform with a modern React frontend and a Node.js/Express backend. It supports multiple AI models, streaming responses, specialized assistants, and a clean UX optimized for desktop and mobile.
 
-## 🚀 Features
+## 🚀 Project Features
 
 ### Core Features
-- **Multi-Model AI Integration** - Powered by Hugging Face models (Llama 2, Mistral, CodeLlama, Zephyr)
-- **Real-Time Chat** - Socket.IO integration with streaming responses
-- **Specialized Chatbots** - Customer Support, Educational, Creative, Code Assistant, Health, Financial
-- **Authentication System** - JWT-based with role-based access control
-- **Conversation Memory** - Context-aware conversations with memory management
-- **Modern UI/UX** - Beautiful, responsive interface with dark mode support
+- Multi‑model AI integration (Llama 2, Mistral, CodeLlama, Zephyr)
+- Real‑time chat with streaming responses (Socket.IO)
+- Specialized assistants: Customer Support, Educational Tutor, Creative Writer, Code Assistant, Health, Financial
+- Secure authentication (JWT) with role‑based access control
+- Conversation memory and transcript export (PDF/Markdown)
+- Modern responsive UI with dark mode
+- File attachments with inline text extraction for text-like files
 
 ### Advanced Features
-- **Voice Integration** - Speech-to-Text and Text-to-Speech capabilities
-- **Emotion Detection** - Sentiment analysis and emotion recognition
-- **Analytics Dashboard** - Conversation insights and usage statistics
-- **Knowledge Base** - Document upload and RAG (Retrieval-Augmented Generation)
-- **Multi-Channel Support** - Web, WhatsApp, Telegram, Slack integration
-- **A/B Testing** - Framework for testing different AI models
-- **Compliance Features** - GDPR/HIPAA compliance tools
-- **Rate Limiting** - Cost control and usage management
+- Voice integration (toggleable)
+- Analytics dashboard (usage and performance)
+- Knowledge base (RAG) – planned hooks and routes present
+- Multi‑channel foundations (API design to extend)
+- A/B testing framework (planned)
+- Compliance and rate‑limiting middleware
+
+### Current UX Behavior
+- Centered navbar brand “AbhiBot” with icon (ChatGPT‑style)
+- Sidebar brand removed; compact menu density
+- Model selection via modal picker (Choose Model) and Explore Models page
+- Selected bot short title shown under the chat input (e.g., “Using: 🤖 Creative”)
+
+## 🧱 Architecture
+
+```mermaid
+flowchart LR
+  subgraph Client [Frontend (React/Vite)]
+    UI[Chat UI: ChatPage, MessageInput, MessageBubble]
+    Ctx[Contexts: AuthContext, ChatContext, ThemeContext]
+  end
+
+  subgraph Server [Backend (Node/Express)]
+    API[/REST API\n/auth, /chat, /bots/]
+    WS[(Socket.IO)]
+    Svc[Services: HF Inference]
+  end
+
+  DB[(MongoDB Atlas)]
+
+  UI <--> Ctx
+  Ctx -- HTTP --> API
+  Ctx -- WebSocket --> WS
+  API <---> DB
+  WS <---> DB
+  API --> Svc
+```
+
+### Data Flow
+- Authenticated user connects via REST and Socket.IO (JWT).
+- Conversations/messages stored in MongoDB; messages stream over Socket.IO.
+- Bot templates/models are fetched from `/api/bots` or template fallback.
+  
 
 ## 🛠 Tech Stack
 
