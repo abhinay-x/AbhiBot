@@ -35,18 +35,29 @@ const app = express();
 const server = createServer(app);
 // Prepare allowed origins for CORS (Socket.IO + Express)
 const defaultFrontend = process.env.FRONTEND_URL || 'http://localhost:3000';
+const normalizeOrigin = (o) => (o || '').replace(/\/+$/, '');
 const allowedOrigins = [
-  defaultFrontend,
-  'http://localhost:3000',
-  'http://127.0.0.1:3000'
-  // You can add your LAN IP if you access via local network, e.g. 'http://192.168.15.148:3000'
+  normalizeOrigin(defaultFrontend),
+  // Common React CRA port
+  normalizeOrigin('http://localhost:3000'),
+  normalizeOrigin('http://127.0.0.1:3000'),
+  // Vite dev server common ports
+  normalizeOrigin('http://localhost:5173'),
+  normalizeOrigin('http://localhost:5174'),
+  normalizeOrigin('http://localhost:5175'),
+  normalizeOrigin('http://127.0.0.1:5173'),
+  normalizeOrigin('http://127.0.0.1:5174'),
+  normalizeOrigin('http://127.0.0.1:5175'),
 ];
+// Dev-only localhost matcher (limits to localhost/127.0.0.1 on any port)
+const isLocalhostOrigin = (origin) => /^http:\/\/(localhost|127\.0\.0\.1):\d+$/.test(origin);
 
 const io = new Server(server, {
   cors: {
     origin: (origin, callback) => {
       if (!origin) return callback(null, true); // allow non-browser clients
-      const isAllowed = allowedOrigins.includes(origin) || /http:\/\/(localhost|127\.0\.0\.1):3000$/.test(origin);
+      const o = normalizeOrigin(origin);
+      const isAllowed = allowedOrigins.includes(o) || isLocalhostOrigin(o);
       callback(isAllowed ? null : new Error('Not allowed by CORS (socket.io)'), isAllowed);
     },
     methods: ['GET', 'POST']
@@ -85,7 +96,7 @@ app.use(helmet());
 app.use(cors({
   origin: (origin, callback) => {
     if (!origin) return callback(null, true); // allow tools like Postman
-    const isAllowed = allowedOrigins.includes(origin) || /http:\/\/(localhost|127\.0\.0\.1):3000$/.test(origin);
+    const isAllowed = allowedOrigins.includes(origin) || isLocalhostOrigin(origin);
     callback(isAllowed ? null : new Error('Not allowed by CORS'), isAllowed);
   },
   credentials: true
