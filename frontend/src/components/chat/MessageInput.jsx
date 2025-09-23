@@ -147,7 +147,10 @@ const MessageInput = ({ onSendMessage }) => {
   })()
 
   return (
-    <div className="border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+    <div
+      className="border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 w-full shadow-[0_-4px_12px_-6px_rgba(0,0,0,0.25)]"
+      style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
+    >
       {/* Attachments Preview */}
       {attachments.length > 0 && (
         <div className="p-3 border-b border-gray-200 dark:border-gray-700">
@@ -205,7 +208,7 @@ const MessageInput = ({ onSendMessage }) => {
       )}
 
       {/* Input Area */}
-      <form onSubmit={handleSubmit} className="p-3 sm:p-4">
+      <form onSubmit={handleSubmit} className="p-3 sm:p-4 max-w-full">
         <div className="flex items-end space-x-2 sm:space-x-3">
           {/* Voice Recording Button */}
           <button
@@ -232,14 +235,14 @@ const MessageInput = ({ onSendMessage }) => {
           </button>
 
           {/* Message Input */}
-          <div className="flex-1 relative">
+          <div className="flex-1 relative min-w-0">
             <textarea
               ref={textareaRef}
               value={message}
               onChange={handleTextareaChange}
               onKeyPress={handleKeyPress}
               placeholder="Type your message..."
-              className="w-full px-3 sm:px-4 py-2 sm:py-3 pr-10 sm:pr-12 bg-gray-100 dark:bg-gray-700 border-0 rounded-2xl focus:ring-2 focus:ring-primary-500 outline-none resize-none text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 text-sm sm:text-base"
+              className="w-full max-w-full px-3 sm:px-4 py-2 sm:py-3 pr-10 sm:pr-12 bg-gray-100 dark:bg-gray-700 border-0 rounded-2xl focus:ring-2 focus:ring-primary-500 outline-none resize-none text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 text-sm sm:text-base"
               rows={1}
               style={{ minHeight: '40px', maxHeight: '120px' }}
             />
