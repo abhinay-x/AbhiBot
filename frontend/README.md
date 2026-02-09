@@ -255,4 +255,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-**Built with ❤️ using React 19, Vite, and Tailwind CSS**
+**Built By abhinay using React 19, Vite, and Tailwind CSS**

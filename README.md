@@ -31,18 +31,18 @@ AbhiBot is a full‑stack, real‑time AI chat platform with a modern React fron
 
 ```mermaid
 flowchart LR
-  subgraph Client [Frontend (React/Vite)]
-    UI[Chat UI: ChatPage, MessageInput, MessageBubble]
-    Ctx[Contexts: AuthContext, ChatContext, ThemeContext]
+  subgraph Client["Frontend (React/Vite)"]
+    UI["Chat UI: ChatPage, MessageInput, MessageBubble"]
+    Ctx["Contexts: AuthContext, ChatContext, ThemeContext"]
   end
 
-  subgraph Server [Backend (Node/Express)]
-    API[/REST API\n/auth, /chat, /bots/]
-    WS[(Socket.IO)]
-    Svc[Services: HF Inference]
+  subgraph Server["Backend (Node/Express)"]
+    API["/REST API<br/>/auth, /chat, /bots/"]
+    WS["Socket.IO"]
+    Svc["Services: HF Inference"]
   end
 
-  DB[(MongoDB Atlas)]
+  DB["MongoDB Atlas"]
 
   UI <--> Ctx
   Ctx -- HTTP --> API
