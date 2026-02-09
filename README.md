@@ -1,4 +1,4 @@
-# AbhiBot – AI Chat Platform
+# [AbhiBot](https://abhibot.netlify.app/) – AI Chat Platform
 
 AbhiBot is a full‑stack, real‑time AI chat platform with a modern React frontend and a Node.js/Express backend. It supports multiple AI models, streaming responses, specialized assistants, and a clean UX optimized for desktop and mobile.
 
